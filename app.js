@@ -60,7 +60,6 @@ app.delete("/todos/:id", async function (request, response) {
   const todo = await Todo.findByPk(request.params.id);
 
   if(todo){
-
     try{
       const toBeDeletedtodo = await todo.deleteTodo();
       return response.send(toBeDeletedtodo ? true : false);
