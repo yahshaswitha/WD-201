@@ -1,22 +1,30 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", function (request, response) {
-  response.send("Hello World");
+app.get("/", async (req, res) => {
+  const allTodos = await Todo.getTodos();
+  if (req.accepts("html")) {
+    res.render("index", {
+      allTodos,
+    });
+  } else {
+    res.json(allTodos);
+  }
 });
 
 app.get("/todos", async function (_request, response) {
-
   console.log("Processing list of all Todos ...");
 
-  try{
+  try {
     const todo = await Todo.getTodos();
     return response.json(todo);
-  } 
-  catch(e){
+  } catch (e) {
     console.log(e);
     return response.status(422).json(e);
   }
@@ -54,25 +62,21 @@ app.put("/todos/:id/markAsCompleted", async function (request, response) {
 });
 
 app.delete("/todos/:id", async function (request, response) {
-
   console.log("We have to delete a Todo with ID: ", request.params.id);
-  
+
   const todo = await Todo.findByPk(request.params.id);
 
-  if(todo){
-    try{
+  if (todo) {
+    try {
       const toBeDeletedtodo = await todo.deleteTodo();
       return response.send(toBeDeletedtodo ? true : false);
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       return response.status(422).json(e);
     }
-  } 
-  else{
+  } else {
     return response.send(false);
   }
-
 });
 
 module.exports = app;
