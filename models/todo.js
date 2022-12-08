@@ -20,11 +20,16 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ completed: true });
     }
 
-    static getTodos() {
-      const todos = Todo.findAll({
+    static async getTodos() {
+      try {
+      const todos = await this.findAll({
         order: [["id", "ASC"]],
       });
       return todos;
+    }
+    catch(e){
+      console.log(e);
+    }
     }
 
     deleteTodo() {
