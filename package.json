@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -e js,ejs",
-    "start:prod": "node index.js && npx sequelize-cli db:create",
+    "start:prod": "node index.js",
     "test": "jest"
   },
   "lint-staged": {
