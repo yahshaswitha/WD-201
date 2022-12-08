@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon -e js,ejs",
     "start:prod": "node index.js",
-    "test": ""
-
+    "test": "jest"
   },
   "lint-staged": {
     "*.js": [

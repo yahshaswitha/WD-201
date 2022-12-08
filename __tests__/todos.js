@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const request = require("supertest");
 
 const db = require("../models/index");
@@ -72,8 +74,7 @@ describe("Todo Application", function () {
   });
 
   test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
-    try{
-
+    try {
       const response = await agent.post("/todos").send({
         title: "Buy milk ",
         dueDate: new Date().toISOString(),
@@ -83,12 +84,8 @@ describe("Todo Application", function () {
       const parseResp = JSON.parse(response.text);
       const todoID = parseResp.id;
 
-      const deletedResponse = await agent
-        .delete(`/todos/${todoID}`)
-        .send();
-      const parsedeletedResponse = JSON.parse(
-        deletedResponse.text
-      );
+      const deletedResponse = await agent.delete(`/todos/${todoID}`).send();
+      const parsedeletedResponse = JSON.parse(deletedResponse.text);
 
       expect(parsedeletedResponse).toBe(true);
 
@@ -97,9 +94,7 @@ describe("Todo Application", function () {
         deletedNonExistingRecord.text
       );
       expect(parseDeletedNonExistingRecord).toBe(false);
-    }
-    catch(e)
-    {
+    } catch (e) {
       console.log(e);
     }
   });
