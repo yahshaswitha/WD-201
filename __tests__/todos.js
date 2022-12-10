@@ -59,16 +59,19 @@ describe("Todo Application", function () {
 
     res = await agent.get("/");
     csrfToken = extractCsrfToken(res);
+    const completedStatus = !latestTodo.completed;
 
     const markCompleteResponse = await agent
       .put(`/todos/${latestTodo.id}`)
       .send({
         _csrf: csrfToken,
+        completed: completedStatus,
       });
 
     const parsedUpdateResponse = JSON.parse(markCompleteResponse.text);
     expect(parsedUpdateResponse.completed).toBe(true);
   });
+
   test("Mark todo as incomplete (Updating Todo)", async () => {
     let res = await agent.get("/");
     let csrfToken = extractCsrfToken(res);

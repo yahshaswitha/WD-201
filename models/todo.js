@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ title: title, dueDate: dueDate, completed: false });
     }
 
-    setCompletionStatus() {
+    setCompletionStatus(completedStatus) {
       return this.update({
-        completed: !this.completed,
+        completed: completedStatus,
       });
     }
 
