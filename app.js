@@ -43,7 +43,7 @@ app.get("/", async function (request, response) {
 
 app.get("/todos", async function (_request, response) {
   console.log("getting the list all Todos ...");
-  
+
   try {
     const todos = await Todo.getTodos();
     return response.json(todos);
@@ -89,7 +89,7 @@ app.put("/todos/:id", async function (request, response) {
 
 app.delete("/todos/:id", async function (request, response) {
   console.log("delete a todo with ID:", request.params.id);
-  
+
   const todo = await Todo.findByPk(request.params.id);
   if (todo) {
     try {
