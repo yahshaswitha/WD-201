@@ -52,7 +52,7 @@ passport.use(
           }
         })
         .catch(() => {
-          return done(null, false, { message: "Invalid Email-ID" });
+          return done(null, false, { message: "Invalid Email" });
         });
     }
   )
@@ -130,11 +130,11 @@ app.post(
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
     if (request.body.title.length < 5) {
-      request.flash("error", "Title length should be atleast 5");
+      request.flash("error", "Title should be atleast 5 characters");
       return response.redirect("/todos");
     }
     if (!request.body.dueDate) {
-      request.flash("error", "Please select a due date");
+      request.flash("error", "Select a due date");
       return response.redirect("/todos");
     }
     console.log(request.body);
@@ -171,7 +171,7 @@ app.delete(
   "/todos/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
-    console.log("delete a todo with ID:", request.params.id);
+    console.log("Delete a todo with ID:", request.params.id);
     try {
       const res = await Todo.remove(request.params.id, request.user.id);
       return response.json({ success: res === 1 });
@@ -203,7 +203,10 @@ app.post("/users", async (request, response) => {
     return response.redirect("/signup");
   }
   if (request.body.password.length < 8) {
-    request.flash("error", "The Length of the password should be atleast 8");
+    request.flash(
+      "error",
+      "The Length of the password should be atleast 8 characters"
+    );
     return response.redirect("/signup");
   }
   const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
