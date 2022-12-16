@@ -51,25 +51,10 @@
     <div class="grid grid-cols-6">
       <div class="col-start-3 col-span-2">
         <%- include("header.ejs") %>
-        <form action="/todos" method="post">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-          <div class="flex gap-2 py-4">
-            <div class="flex-auto">
-              <input type="text" placeholder="What's next?" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" name="title" required/>
-            </div>
-            <div class="flex-auto">
-              <input type="date" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm leading-4" name="dueDate" value='<%= new Date().toLocaleDateString("en-CA"); %>' required/>
-            </div>
-            <div class="flex-none">
-              <button type="submit" class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">Add </button>
-            </div>
-          </div>
-        </form>
-        <%- include("todos.ejs", {title: "Overdue",data: overdueItems}) %>         
-        <%- include("todos.ejs", {title: "Due Today",data: dueTodayItems}) %>          
-        <%- include("todos.ejs", {title: "Due Later",data: dueLaterItems}) %>        
-        <%- include("todos.ejs", {title: "Completed Items",data: completedItems}) %>
-        <%- include('footer.ejs') %>
+        <p class="py-2">TODO Manager</p>
+        <p class="py-2">New here ? <a href="/signup" class="text-green-600">Sign Up</a></p>
+        <p class="py-2">Already have an account ? <a href="/login" class="text-green-600">Login</a></p>
+        <%- include("footer.ejs") %>
       </div>
     </div>
   </body>
